@@ -2,16 +2,24 @@
 .env
 __pycache__/
 
+notebooks/catboost_info/
+
 # Игнорируем артефакты и временные файлы
 *.csv
-*.ipynb
+candidate_generation.ipynb
+lms.ipynb
 notes.txt
+app_lms.py
 
 # Игнорируем ноутбуки и catboost логи
-notebooks/
+# notebooks/
 
 # Игнорируем модели
-ml_models/
+# ml_models/
 
 # Игнорируем локальный README (если нужно)
-README.md
+
+rank_model_control
+rank_model_test
+
+app.log

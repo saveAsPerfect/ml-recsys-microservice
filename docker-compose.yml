@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/recommender_db
+      - MODEL_CONTROL_PATH=/app/ml_models/control_model.cbm
+      - MODEL_TEST_PATH=/app/ml_models/test_model.cbm
+      - AB_TEST_ENABLED=true
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./ml_models:/app/ml_models:ro
+      - ./logs:/usr/src/app/logs
+    depends_on:
+      - db
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=recommender_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
