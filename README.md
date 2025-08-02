@@ -14,16 +14,16 @@ The service generates recommendations for a user based on their like history, pr
 ## Metrics
 Model performance is assessed primarily using HitRate@5, defined as:
 
-
+<br>
 <p align="center">
   <img src="https://latex.codecogs.com/svg.image?\large&space;\color{White}Hitrate@5=\frac{1}{n\cdot&space;T}\sum_{t=1}^{T}\sum_{i=1}^{n}\min\left(1,\sum_{j=1}^{5}\left[a_j(x_i,&space;t)=1\right]\right)" alt="Hitrate formula">
 </p>
 
 
 where:  
-- $ n $ – number of users  
-- $ T $ – number of test periods  
-- $ a_j(x_i, t) $ – indicator function: whether the \(j\)-th recommended post for user \(i\) at time \(t\) was actually liked.
+- n – number of users  
+- T – number of test periods  
+- a(x,t) – indicator function: whether the \(j\)-th recommended post for user \(i\) at time \(t\) was actually liked.
 
 
 ### Additional Metrics:
